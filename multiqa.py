@@ -1,4 +1,3 @@
-from typing import Dict, Any
 import argparse
 import logging
 import json
@@ -33,6 +32,7 @@ def main():
     parse.add_argument("--data_dir", type=str, help="directory containing the multiqa format datasets , (please add '/' at the end and make sure to have a headers directory with all headers under your specified path)", default='https://multiqa.s3.amazonaws.com/data/')
     parse.add_argument("--t_total", type=str, help="used for training, see BERT's learning rate schedule for details", default=None)
     parse.add_argument("--sample_size", type=str, help="used for sampling a subset of the training data", default=-1)
+    parse.add_argument("--validation_sample_size", type=str, help="used for sampling a subset of the training data", default=-1)
     parse.add_argument("--batch_size", type=str, help="the batch size", default=8)
     parse.add_argument("--max_instances_in_memory", type=str, help="max number instances in memrory during training", default=5000)
     parse.add_argument("--num_epochs", type=str, help="", default=2)
@@ -67,7 +67,7 @@ def main():
                     / len(args.cuda_device.split(','))
 
         if args.serialization_dir is None:
-            serialization_dir = 'models/' + args.datasets.replace(',','_')
+            serialization_dir = 'models/' + args.datasets.replace(',','_') + f"num_epochs_{args.num_epochs}_batch_size_{args.batch_size}_lr_{args.lr}"
         else:
             serialization_dir = args.serialization_dir
 
@@ -78,7 +78,10 @@ def main():
             'validation_data_path': ','.join(val_datasets),
             'dataset_reader': {
                 'sample_size': args.sample_size, 
-            }, 
+            },
+            'validation_dataset_reader': {
+                'sample_size': args.validation_sample_size,
+            },
             'iterator': {
                 'batch_size': args.batch_size,
                 'max_instances_in_memory': args.max_instances_in_memory,
@@ -114,6 +117,10 @@ def main():
         # Load the evaluation data
         validation_dataset_reader_params = config_params.get('validation_dataset_reader', None)
         dataset_reader = DatasetReader.from_params(validation_dataset_reader_params)
+
+        # print(" *  *  *  *  *  *  * ")
+        # print(validation_dataset_reader_params)
+        # print(dataset_reader)
 
         # running over all validation datasets specified
         val_dataset_names = args.datasets.split(',')

@@ -6,7 +6,7 @@
 # Usage: ./scripts/create_beaker_image.sh
 
 
-IMAGE_NAME=MultiQA_danielkh
+IMAGE_NAME=MultiQA_danielk
 DOCKERFILE_NAME=Dockerfile
 
 # Image name
