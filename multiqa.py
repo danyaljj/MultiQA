@@ -32,6 +32,11 @@ def main():
     parse.add_argument("--models_dir", type=str, help="directory containing the models used for eval , (please add '/' at the end)", default=None)
     parse.add_argument("--data_dir", type=str, help="directory containing the multiqa format datasets , (please add '/' at the end and make sure to have a headers directory with all headers under your specified path)", default='https://multiqa.s3.amazonaws.com/data/')
     parse.add_argument("--t_total", type=str, help="used for training, see BERT's learning rate schedule for details", default=None)
+    parse.add_argument("--sample_size", type=str, help="used for sampling a subset of the training data", default=-1)
+    parse.add_argument("--batch_size", type=str, help="the batch size", default=8)
+    parse.add_argument("--max_instances_in_memory", type=str, help="max number instances in memrory during training", default=5000)
+    parse.add_argument("--num_epochs", type=str, help="", default=2)
+    parse.add_argument("--lr", type=str, help="learning rate", default=0.00003)
     args = parse.parse_args()
 
     import_submodules("models")
@@ -66,12 +71,25 @@ def main():
         else:
             serialization_dir = args.serialization_dir
 
+            
+        print(" >>>>>>>> overriding the parameters <<<<<<<<<<< ") 
         overrides = {
             'train_data_path': ','.join(train_datasets),
             'validation_data_path': ','.join(val_datasets),
+            'dataset_reader': {
+                'sample_size': args.sample_size, 
+            }, 
+            'iterator': {
+                'batch_size': args.batch_size,
+                'max_instances_in_memory': args.max_instances_in_memory,
+             },
             'trainer': {
                 'cuda_device': args.cuda_device,
-                'optimizer': {'t_total': t_total}
+                'num_epochs': args.num_epochs,
+                'optimizer': {
+                  't_total': t_total, 
+                  'lr': args.lr,
+                }
             }
         }
 
