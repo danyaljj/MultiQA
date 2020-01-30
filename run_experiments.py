@@ -1,14 +1,18 @@
 import json
 import os
 import sys
-import subprocess
 
 def main():
+    other_options = ""
+    if len(sys.argv) > 3:
+        other_options = " ".join(sys.argv[3:])
+
+
     # first, train models with different hyperparameters
     for batch_size in [16,32]:
         for num_epochs in [3,4]:
             for lr in [0.00002,0.00003,0.00005]:
-                command = f"python multiqa.py train --datasets {sys.argv[1]}  --cuda_device 0,1 --batch_size {batch_size} --num_epochs {num_epochs} --lr {lr}"
+                command = f"python multiqa.py train --datasets {sys.argv[1]} --batch_size {batch_size} --num_epochs {num_epochs} --lr {lr} {other_options}"
                 print(command)
                 os.system(command)
 
@@ -27,12 +31,9 @@ def main():
 
 
     # evaluate the best model on all the datasets
-    models = ['SQuAD1-1', 'NewsQA', 'SearchQA', 'TriviaQA_wiki', 'WikiHop', 'ComplexWebQuestions', 'DuoRC']
-
-    for eval_m in models:
-        command = f"python multiqa.py evaluate --model model --datasets {eval_m} --cuda_device 0  --models_dir  'models/{top_model}/'"
-        print(command)
-        os.system(command)
+    command = f"python multiqa.py evaluate --model model --datasets {sys.argv[2]} --models_dir  'models/{top_model}/' {other_options}"
+    print(command)
+    os.system(command)
 
     # collect the results in a file
     output_metrics = {
