@@ -38,7 +38,8 @@ def main():
     print(f" >>>>>>> top model: {top_model} with score {top_score}")
 
     # evaluate the best model on all the datasets
-    command = f"python multiqa.py evaluate --model model --datasets {sys.argv[2]} --models_dir {top_model}/   --data_dir /Users/danielk/ideaProjects/MultiQA/samples/  {other_options}"
+    # --data_dir /Users/danielk/ideaProjects/MultiQA/samples/
+    command = f"python multiqa.py evaluate --model model --datasets {sys.argv[2]} --models_dir {top_model}/  {other_options}"
     print(f" >>>>>>> evaluating with command: {command}")
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     process.communicate()
