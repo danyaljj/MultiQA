@@ -1,0 +1,18 @@
+description: >-
+  Training BERT-base wih $TRAIN_DATASET
+tasks:
+  - spec:
+      image: MultiQA_with_hyper-param-search-v1
+      resultPath: /
+      args:
+        - python
+        - run_experiments.py
+        - $TRAIN_DATASET
+        - SQuAD1-1
+        - --cuda_device
+        - 0
+      env:
+        TRAIN_DATASET: $TRAIN_DATASET
+      requirements:
+        gpuCount: 1
+        gpuType: v100
