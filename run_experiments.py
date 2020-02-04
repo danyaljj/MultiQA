@@ -65,9 +65,9 @@ def main():
                 output_metrics[dataset + 'loss'] = metrics['loss']
 
     # os.mkdir("/output")
-    os.mkdir("output")
+    # os.mkdir("output")
 
-    with open('output/metrics.json', 'w') as f:
+    with open('/output/metrics.json', 'w') as f:
         json.dump(output_metrics, f)
 
     command = f"ls -lha"
@@ -75,12 +75,12 @@ def main():
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     process.communicate()
 
-    command = f"ls -lha output/"
+    command = f"ls -lha /output/"
     os.system(command)
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     process.communicate()
 
-    with open("output/metrics.json", 'r') as fin:
+    with open("/output/metrics.json", 'r') as fin:
         print(fin.read())
 
 if __name__ == "__main__":
