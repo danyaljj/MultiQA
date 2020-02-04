@@ -127,10 +127,12 @@ def main():
         val_datasets = [args.data_dir + dataset + '_' + args.split + '.jsonl.gz' for dataset in val_dataset_names]
 
         for val_dataset_path,val_dataset_name in zip(val_datasets,val_dataset_names):
+            print(f" * * * val_dataset_name: {val_dataset_name}")
             # This is a bit strange but there is a lot of config "popping" going on implicitly in allennlp
             # so we need to have the full config reloaded every iteration...
             config_params = Params(json.loads(_jsonnet.evaluate_file(config)))
 
+            print("Reading evaluation data from %s", val_dataset_path)
             logger.info("Reading evaluation data from %s", val_dataset_path)
             instances = dataset_reader.read(val_dataset_path)
 
@@ -142,6 +144,7 @@ def main():
             metrics = evaluate(model, instances, iterator, int(args.cuda_device), '')
 
             logger.info("Finished evaluating " + val_dataset_name)
+            print("Finished evaluating " + val_dataset_name)
             logger.info("Metrics:")
             for key, metric in metrics.items():
                 logger.info("%s: %s", key, metric)

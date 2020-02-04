@@ -47,6 +47,8 @@ def main():
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     process.communicate()
     if process.returncode:
+        print(process.stderr)
+        print(process.stdout)
         raise Exception('program returned error code {0}'.format(process.returncode))
 
     # collect the results in a file
@@ -64,8 +66,6 @@ def main():
                 output_metrics[dataset + 'f1'] = metrics['f1']
                 output_metrics[dataset + 'loss'] = metrics['loss']
 
-    # os.mkdir("/output")
-    # os.mkdir("output")
 
     with open('/output/metrics.json', 'w') as f:
         json.dump(output_metrics, f)
