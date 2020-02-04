@@ -81,10 +81,8 @@ def main():
     process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     process.communicate()
 
-    command = f"less output/metrics.json"
-    os.system(command)
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-    process.communicate()
+    with open("output/metrics.json", 'r') as fin:
+        print(fin.read())
 
 if __name__ == "__main__":
     main()
