@@ -67,9 +67,24 @@ def main():
     os.mkdir("/output")
     os.mkdir("output")
 
+
     with open('output/metrics.json', 'w') as f:
         json.dump(output_metrics, f)
 
+    command = f"ls -lha"
+    os.system(command)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    process.communicate()
+
+    command = f"ls -lha output/"
+    os.system(command)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    process.communicate()
+
+    command = f"less output/metrics.json"
+    os.system(command)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    process.communicate()
 
 if __name__ == "__main__":
     main()
