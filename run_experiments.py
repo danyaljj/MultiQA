@@ -64,7 +64,7 @@ def main():
                 output_metrics[dataset + 'f1'] = metrics['f1']
                 output_metrics[dataset + 'loss'] = metrics['loss']
 
-    os.mkdir("/output")
+    # os.mkdir("/output")
 
     with open('output/metrics.json', 'w') as f:
         json.dump(output_metrics, f)
