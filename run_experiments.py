@@ -61,7 +61,7 @@ def main():
                 output_metrics[dataset + 'f1'] = metrics['f1']
                 output_metrics[dataset + 'loss'] = metrics['loss']
 
-    with open('output/metrics.json', 'w') as f:
+    with open('models/metrics.json', 'w') as f:
         json.dump(output_metrics, f)
 
 
