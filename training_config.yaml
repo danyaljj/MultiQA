@@ -2,15 +2,20 @@ description: >-
   Training BERT-base wih $TRAIN_DATASET
 tasks:
   - spec:
-      image: MultiQA_with_hyper-param-search-v1
-      resultPath: /
+      image: MultiQA_with_hyper-param-search-v2
+      resultPath: /output
       args:
         - python
+        - -u
         - run_experiments.py
         - $TRAIN_DATASET
         - SQuAD1-1
         - --cuda_device
         - 0
+        - --sample_size
+        - 10
+        - --validation_sample_size
+        - 10
       env:
         TRAIN_DATASET: $TRAIN_DATASET
       requirements:

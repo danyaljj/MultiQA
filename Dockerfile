@@ -6,6 +6,7 @@ RUN pip install -r requirements.txt
 
 # Copy code
 COPY build_dataset.py .
+COPY run_experiments.py .
 COPY convert_multiqa_to_squad_format.py .
 COPY multiqa.py .
 COPY predict.py .
