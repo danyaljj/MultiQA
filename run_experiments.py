@@ -44,7 +44,7 @@ def main():
     # --data_dir /Users/danielk/ideaProjects/MultiQA/samples/
     command = f"python multiqa.py evaluate --model model --datasets {sys.argv[2]} --models_dir {top_model}/  {other_options}"
     print(f" >>>>>>> evaluating with command: {command}")
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     process.communicate()
     if process.returncode:
         print(process.stderr)

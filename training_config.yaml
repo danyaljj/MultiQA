@@ -2,7 +2,7 @@ description: >-
   Training BERT-base wih $TRAIN_DATASET
 tasks:
   - spec:
-      image: MultiQA_with_hyper-param-search-v11
+      image: MultiQA_with_hyper-param-search-v12
       resultPath: /output
       args:
         - python

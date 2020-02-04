@@ -99,20 +99,22 @@ def main():
         overrides_str = str(overrides).replace('True', 'true').replace('False', 'false')
         train_model_from_file(config, serialization_dir, overrides_str, True, False, True, "", "")
     elif args.command == 'evaluate':
-
+        print(" evaluate . . . ")
         if args.models_dir is None:
             model_path = 'https://multiqa.s3.amazonaws.com/models/BERT' + args.bert_type + '/' + args.model + '.tar.gz'
         else:
             model_path = args.models_dir + args.model + '.tar.gz'
         model_cached_path = cached_path(model_path)
 
-
+        print(" loading models . . . .")
         overrides_str = ''
         # Load from archive
         archive = load_archive(model_cached_path, int(args.cuda_device), overrides_str, '')
         prepare_environment(config_params)
         model = archive.model
         model.eval()
+
+        print(" loading data . . . .")
 
         # Load the evaluation data
         validation_dataset_reader_params = config_params.get('validation_dataset_reader', None)
@@ -121,6 +123,8 @@ def main():
         # print(" *  *  *  *  *  *  * ")
         # print(validation_dataset_reader_params)
         # print(dataset_reader)
+
+        print(" looping over datasets . . . .")
 
         # running over all validation datasets specified
         val_dataset_names = args.datasets.split(',')
