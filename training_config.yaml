@@ -2,7 +2,7 @@ description: >-
   Training BERT-base wih $TRAIN_DATASET
 tasks:
   - spec:
-      image: MultiQA_with_hyper-param-search-v12
+      image: MultiQA_with_hyper-param-search-v13
       resultPath: /output
       args:
         - python
@@ -11,12 +11,9 @@ tasks:
         - $TRAIN_DATASET
         - SQuAD1-1,NewsQA,SearchQA,TriviaQA_wiki,WikiHop,ComplexWebQuestions,DuoRC_Paraphrase,SQuAD2-0,ComQA,DROP,HotpotQA
         - --cuda_device
-        - 0,1
-        - --sample_size
-        - 1
-        - --validation_sample_size
-        - 1
+        - 0
       env:
         TRAIN_DATASET: $TRAIN_DATASET
       requirements:
-        gpuCount: 2
+        gpuType: v100
+        gpuCount: 1

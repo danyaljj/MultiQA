@@ -42,14 +42,25 @@ def main():
 
     # evaluate the best model on all the datasets
     # --data_dir /Users/danielk/ideaProjects/MultiQA/samples/
-    command = f"python multiqa.py evaluate --model model --datasets {sys.argv[2]} --models_dir {top_model}/  {other_options}"
-    print(f" >>>>>>> evaluating with command: {command}")
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    process.communicate()
-    if process.returncode:
-        print(process.stderr)
-        print(process.stdout)
-        raise Exception('program returned error code {0}'.format(process.returncode))
+    # command = f"python multiqa.py evaluate --model model --datasets {sys.argv[2]} --models_dir {top_model}/  {other_options}"
+    # print(f" >>>>>>> evaluating with command: {command}")
+    # process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    # process.communicate()
+    # if process.returncode:
+    #     print(process.stderr)
+    #     print(process.stdout)
+    #     raise Exception('program returned error code {0}'.format(process.returncode))
+
+    evaluation_datasets = sys.argv[2]
+    for eval_dataset in evaluation_datasets.split(","):
+        command = f"python multiqa.py evaluate --model model --datasets {eval_dataset} --models_dir {top_model}/  {other_options}"
+        print(f" >>>>>>> evaluating with command: {command}")
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        process.communicate()
+        if process.returncode:
+            print(process.stderr)
+            print(process.stdout)
+            raise Exception('program returned error code {0}'.format(process.returncode))
 
     # collect the results in a file
     print(f" >>>>>>> collecting the numbers")
