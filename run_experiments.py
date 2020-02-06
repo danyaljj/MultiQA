@@ -10,7 +10,7 @@ def main():
         other_options = " ".join(sys.argv[3:])
 
     # first, train models with different hyperparameters
-    for batch_size in [16, 32]:
+    for batch_size in [8]:
         for num_epochs in [3, 4]:
             for lr in [0.00002, 0.00003, 0.00005]:
     # lr = 0.00002
