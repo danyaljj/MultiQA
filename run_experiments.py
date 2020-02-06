@@ -10,19 +10,19 @@ def main():
         other_options = " ".join(sys.argv[3:])
 
     # first, train models with different hyperparameters
-    # for batch_size in [16, 32]:
-    #     for num_epochs in [3, 4]:
-    #         for lr in [0.00002, 0.00003, 0.00005]:
-    lr = 0.00002
-    num_epochs = 3
-    batch_size = 16
-    command = f"python multiqa.py train --datasets {sys.argv[1]} --batch_size {batch_size} --num_epochs {num_epochs} --lr {lr} {other_options}"
-    print(f" >>>>>>> Training with command {command}")
-    os.system(command)
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
-    process.communicate()
-    if process.returncode:
-        raise Exception('program returned error code {0}'.format(process.returncode))
+    for batch_size in [16, 32]:
+        for num_epochs in [3, 4]:
+            for lr in [0.00002, 0.00003, 0.00005]:
+    # lr = 0.00002
+    # num_epochs = 3
+    # batch_size = 16
+                command = f"python multiqa.py train --datasets {sys.argv[1]} --batch_size {batch_size} --num_epochs {num_epochs} --lr {lr} {other_options}"
+                print(f" >>>>>>> Training with command {command}")
+                os.system(command)
+                process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+                process.communicate()
+                if process.returncode:
+                    raise Exception('program returned error code {0}'.format(process.returncode))
 
     # choose the best model
     top_model = ""
