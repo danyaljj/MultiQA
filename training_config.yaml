@@ -1,8 +1,8 @@
 description: >-
-  Training BERT-base (MultiQA)
+  Training BERT-base (MultiQA): HotpotQA
 tasks:
   - spec:
-      image: MultiQA_with_hyper-param-search-v15
+      image: MultiQA_with_hyper-param-search-v16
       resultPath: /output
       args:
         - python
