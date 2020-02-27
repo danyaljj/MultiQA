@@ -5,10 +5,10 @@ import subprocess
 
 
 def main():
-    # other_options = ""
-    # if len(sys.argv) > 3:
-    #     other_options = " ".join(sys.argv[3:])
-    #
+    other_options = ""
+    if len(sys.argv) > 3:
+        other_options = " ".join(sys.argv[3:])
+
     # # first, train models with different hyperparameters
     # for batch_size in [8]:
     #     for num_epochs in [3, 4]:
@@ -33,10 +33,10 @@ def main():
             continue
         print(f" >>>>> reading from folder: {folder}")
         print(f" -----> {top_score}")
-        print(f" -----> {top_score}")
         with open(f"{folder}/metrics.json") as f:
             metrics = json.load(f)
             print(f" -----> {metrics['validation_f1']}")
+            print(metrics)
             if metrics['validation_f1'] > top_score:
                 top_model = folder
                 top_score = metrics['validation_f1']
